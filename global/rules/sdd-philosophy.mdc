@@ -1,0 +1,12 @@
+---
+description: Specification-Driven Development philosophy and pipeline
+alwaysApply: true
+---
+
+# Development Philosophy
+
+- **Specification-Driven Development (SDD)**: PRD first, then tasks, then TDD implementation
+- **Pipeline**: `/discovery` (optional) -> `/discovery-review` -> `/prd` -> `/prd-review` -> `/feature-spec` (per feature) -> `/feature-review` -> `/feature-to-tasks` -> `/task-review` -> implement (TDD with hooks) -> `/quality-gates` -> `/impl-review`
+- **Short, verifiable tasks**: Each task must be deterministic, verifiable, objective, and atomic
+- **TDD**: Write tests alongside or before implementation for early feedback
+- **Strict linting on every edit**: Hooks auto-lint and type-check after every file save

@@ -1,0 +1,16 @@
+---
+description: Python code quality standards and tooling
+alwaysApply: false
+globs:
+  - "**/*.py"
+---
+
+# Python Code Quality Standards
+
+- **Linter**: ruff (35+ rules, S rules for security)
+- **Formatter**: ruff format
+- **Type checker**: pyright strict mode
+- **Tests**: pytest + pytest-cov (100% coverage)
+- **Complexity**: xenon grade A everywhere
+- **Dead code**: vulture (min-confidence 80)
+- **Typos**: codespell

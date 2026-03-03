@@ -1,0 +1,152 @@
+# Golden pyproject.toml template for Python projects
+# Copy to your project root and replace <package_name> and <ProjectName>
+
+[project]
+name = "<package-name>"
+version = "0.1.0"
+description = "<description>"
+readme = "README.md"
+authors = [
+    { name = "Helton Dória", email = "helton.doria@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+# <package-name> = "<package_name>:main"
+
+[build-system]
+requires = ["uv_build>=0.10.2,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0",
+    "pytest-asyncio>=1.3",
+    "pytest-cov>=7.0",
+    "pyright>=1.1",
+    "ruff>=0.15",
+    "xenon>=0.9",
+    "vulture>=2.14",
+    "codespell>=2.4",
+]
+
+# --- Ruff (Linting + Formatting) ---
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "N",      # pep8-naming
+    "UP",     # pyupgrade
+    "S",      # flake8-bandit (security)
+    "B",      # flake8-bugbear
+    "A",      # flake8-builtins
+    "BLE",    # flake8-blind-except
+    "C4",     # flake8-comprehensions
+    "PT",     # flake8-pytest-style
+    "ANN",    # flake8-annotations
+    "ARG",    # flake8-unused-arguments
+    "T20",    # flake8-print (force logging)
+    "RET",    # flake8-return
+    "SLF",    # flake8-self (private member access)
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+    "PIE",    # flake8-pie
+    "PTH",    # flake8-use-pathlib
+    "ERA",    # eradicate (commented-out code)
+    "ASYNC",  # flake8-async
+    "PLC",    # pylint convention
+    "PLE",    # pylint error
+    "PLR",    # pylint refactor
+    "PLW",    # pylint warning
+    "RUF",    # ruff-specific
+    "PERF",   # perflint (performance anti-patterns)
+    "FBT",    # flake8-boolean-trap
+    "DTZ",    # flake8-datetimez
+    "ICN",    # flake8-import-conventions
+    "ISC",    # flake8-implicit-str-concat
+    "TID",    # flake8-tidy-imports
+    "FLY",    # flynt (f-string conversion)
+    "TRY",    # tryceratops (exception patterns)
+]
+ignore = [
+    "PLR0913",  # too many arguments (common in DI-heavy code)
+    "PLR2004",  # magic value comparison (noisy in tests)
+    "ANN401",   # disallow Any (sometimes unavoidable)
+    "TRY003",   # long exception messages (acceptable)
+    "ISC001",   # conflicts with ruff formatter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "S101",     # allow assert
+    "S105",     # allow hardcoded passwords in test fixtures
+    "ARG001",   # allow unused args (fixtures)
+    "ANN",      # skip annotations in tests
+    "SLF001",   # allow private access in tests
+    "PLC0415",  # allow non-top-level imports
+    "PT012",    # allow complex pytest.raises blocks
+    "BLE001",   # allow blind except in tests
+    "FBT",      # allow boolean args in tests
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["<package_name>"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# --- Pyright (Type Checking) ---
+
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.12"
+
+# --- Pytest + Coverage ---
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = ["-v", "--strict-markers", "--tb=short"]
+markers = [
+    "integration: marks tests as integration tests",
+    "slow: marks tests as slow",
+]
+
+[tool.coverage.run]
+source = ["src/<package_name>"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.",
+    "@overload",
+    "\\.\\.\\.",
+    "@abstractmethod",
+    "raise NotImplementedError",
+]
+
+# --- Vulture (Dead Code) ---
+
+[tool.vulture]
+min_confidence = 80
+paths = ["src/<package_name>"]
+
+# --- Codespell (Typos) ---
+
+[tool.codespell]
+skip = ".git,.venv,uv.lock"
+check-filenames = true

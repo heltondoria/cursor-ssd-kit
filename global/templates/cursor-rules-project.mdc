@@ -1,0 +1,89 @@
+---
+description: Project overview, commands, architecture, and development workflow
+alwaysApply: true
+---
+
+# Project Overview
+
+<!-- Replace with project-specific description -->
+**<project-name>**: <one-line description>
+
+- **Status**: Active
+- **Python**: 3.12+
+- **License**: MIT
+
+## Commands
+
+```bash
+# Install dependencies
+uv sync
+
+# Run tests
+uv run pytest
+
+# Run a single test
+uv run pytest tests/test_file.py::test_function_name
+
+# Lint
+uv run ruff check .
+
+# Auto-fix lint
+uv run ruff check --fix .
+
+# Format
+uv run ruff format .
+
+# Type check
+uv run pyright src/
+
+# Coverage
+uv run pytest --cov=src/<package_name> --cov-fail-under=100
+
+# Complexity
+uv run xenon --max-absolute A --max-modules A --max-average A src/
+
+# Dead code
+uv run vulture --min-confidence 80 src/
+
+# Typos
+uv run codespell .
+```
+
+## Architecture
+
+<!-- Document module responsibilities as the project is built -->
+- `src/<package_name>/` — Main package (src layout)
+- Entry point: `<package_name>:main`
+
+## Key Design Decisions
+
+<!-- Add project-specific decisions here -->
+- Async-first I/O
+- Pydantic v2 frozen models for configuration
+- Exception chaining with `from e`
+- Structured logging with `extra={}`
+
+## Development Workflow
+
+This project follows a specification-driven development pipeline:
+
+1. **PRD** — `/prd` to create, `/prd-review` to validate
+2. **Tasks** — `/feature-to-tasks` to decompose, `/task-review` to validate
+3. **Implement** — TDD per task, hooks auto-lint on every edit
+4. **Quality** — `/quality-gates` to run all 6 gates
+5. **Validate** — `/impl-review` to verify against PRD
+
+## Git Conventions
+
+### Branch Naming
+- `feat/description` — New features
+- `fix/description` — Bug fixes
+- `refactor/description` — Refactoring
+- `docs/description` — Documentation
+
+### Commit Messages
+```
+type(scope): short description
+
+type: feat, fix, refactor, test, docs, chore
+```

@@ -1,0 +1,15 @@
+---
+description: TypeScript code quality standards and tooling
+alwaysApply: false
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+---
+
+# TypeScript Code Quality Standards
+
+- **Linter + Formatter**: Biome v2 (strict rules)
+- **Type checker**: tsc strict mode (noUncheckedIndexedAccess, exactOptionalPropertyTypes)
+- **Tests**: Vitest + @vitest/coverage-v8 (90%+ coverage)
+- **Dead exports**: Knip
+- **Typos**: codespell

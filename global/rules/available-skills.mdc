@@ -1,0 +1,33 @@
+---
+description: Available skills, agents, and conventions reference
+alwaysApply: true
+---
+
+# Conventions
+
+Each project should have a `CONVENTIONS.md` at its root. The convention-checker agent reads this file.
+
+Template available at `~/.cursor/templates/CONVENTIONS.md`.
+
+# Available Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `/discovery` | Discover the WHY behind a project (Golden Circle) |
+| `/discovery-review` | Validate discovery document completeness (6 criteria) |
+| `/prd` | Create PRD through guided questioning |
+| `/prd-review` | Validate PRD completeness (11 criteria) |
+| `/feature-spec` | Refine a single PRD feature into detailed implementation spec |
+| `/feature-review` | Validate feature spec quality (8 criteria) before task generation |
+| `/feature-to-tasks` | Generate TDD-structured task list from a feature spec |
+| `/task-review` | Validate task list quality and spec coverage |
+| `/quality-gates` | Run all quality checks and report pass/fail |
+| `/impl-review` | Validate implementation against feature spec with scoring |
+| `/scaffold` | Create new project with full tooling setup |
+| `/adopt` | Migrate existing project to unified tooling standards |
+
+# Available Agents
+
+| Agent | Purpose |
+|-------|---------|
+| `convention-checker` | Check code against project CONVENTIONS.md |

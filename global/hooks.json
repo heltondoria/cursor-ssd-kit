@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "~/.cursor/hooks/lint-python.sh",
+        "timeout": 15,
+        "matcher": "*.py",
+        "type": "command"
+      },
+      {
+        "command": "~/.cursor/hooks/typecheck-python.sh",
+        "timeout": 30,
+        "matcher": "*.py",
+        "type": "command"
+      },
+      {
+        "command": "~/.cursor/hooks/lint-typescript.sh",
+        "timeout": 15,
+        "matcher": "*.{ts,tsx,js,jsx}",
+        "type": "command"
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "~/.cursor/hooks/block-protected-files.sh",
+        "timeout": 5,
+        "matcher": "*.{env,lock}",
+        "type": "command"
+      }
+    ]
+  }
+}

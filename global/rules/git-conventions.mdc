@@ -1,0 +1,26 @@
+---
+description: Git conventions, branch naming, commit messages, and platform info
+alwaysApply: true
+---
+
+# Git Conventions
+
+## Branch Naming
+- `feat/description` — New features
+- `fix/description` — Bug fixes
+- `refactor/description` — Refactoring
+- `docs/description` — Documentation
+
+## Commit Messages
+```
+type(scope): short description
+
+type: feat, fix, refactor, test, docs, chore
+```
+
+## Platform
+
+- **VCS**: GitLab (primary), GitHub (open source)
+- **CI**: GitLab CI with pipeline-components
+- **CLI fallback**: `glab` for GitLab, `gh` for GitHub
+- **Package manager**: `uv` (Python), `npm`/`pnpm` (TypeScript)

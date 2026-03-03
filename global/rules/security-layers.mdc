@@ -1,0 +1,10 @@
+---
+description: Security layers applied across the development pipeline
+alwaysApply: true
+---
+
+# Security Layers
+
+1. **Instant (hooks)**: ruff S rules on every edit
+2. **Quality gates**: Semgrep local scan (offline)
+3. **CI**: Full SAST, dependency scan, container scan, secret detection (pipeline-components)
