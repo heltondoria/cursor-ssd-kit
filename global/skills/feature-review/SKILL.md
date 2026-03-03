@@ -39,8 +39,8 @@ This codebase exploration is **mandatory** — do NOT skip it. Many defects are 
 
 Cross-reference the spec against the PRD feature section:
 
-- [ ] **AC coverage**: Every AC listed in the PRD that belongs to backend is addressed (covered directly OR explicitly deferred with rationale)
-- [ ] **ACs correctly deferred**: Deferred ACs cite a valid reason (frontend-only, nice-to-have, depends on another feature)
+- [ ] **AC coverage**: Every AC listed in the PRD for this feature is addressed (covered directly OR redirected to an existing feature with justification)
+- [ ] **Uncovered ACs actionable**: ACs not covered are either part of another existing feature (with reference) or proposed as new features for the PRD (with name + description)
 - [ ] **Endpoints match**: API endpoints in spec § 3 match the PRD endpoint table for this feature
 - [ ] **Error scenarios match**: Spec § 5 covers all error rows from PRD § 6.3 for this feature
 - [ ] **Async/sync alignment**: Spec § 8.1 matches PRD § 12.1 for this feature
@@ -117,7 +117,7 @@ Verify test scenarios are comprehensive:
 Verify the spec explicitly delineates what is IN and OUT of scope:
 
 - [ ] **In-scope clear**: Summary and design sections make it clear what this feature implements
-- [ ] **Deferred items explicit**: Each AC not covered is listed with its deferral target (e.g., "AC3 → F8 frontend")
+- [ ] **Uncovered ACs traceable**: Each AC not covered points to an existing feature (e.g., "AC3 → F8") or is proposed as a new feature (e.g., "AC3 → new feature: Advanced Filtering")
 - [ ] **No scope creep**: Spec doesn't implement functionality belonging to other features
 - [ ] **Dependencies declared**: § 7.1 lists all features this one depends on
 - [ ] **Consumers declared**: § 7.2 lists all features that will use this one's outputs
@@ -178,7 +178,8 @@ PRD AC  | Spec §              | Test Scenarios      | Status
 --------|----------------------|---------------------|--------
 AC1     | § 2.1, § 4 (model)  | § 6.1 #7, § 6.2 #7 | COVERED
 AC2     | § 3, § 4 (service)  | § 6.1 #1-#6        | COVERED
-AC3     | Deferred → F8       | —                   | DEFERRED
+AC3     | → F8 (frontend)     | —                   | OTHER FEATURE
+AC6     | → New: Adv. Filter  | —                   | PROPOSED
 AC5     | § 7.2 (F6 consumes) | § 6.1 #8            | COVERED
 ```
 

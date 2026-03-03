@@ -309,7 +309,7 @@ class ScopeAssignedPayload(BaseModel):
 3. **TARGET 150-300 lines** — If longer, you're over-specifying. If shorter, you're missing design decisions.
 4. **Every section must add NEW information** not present in the PRD.
 5. **Include a reference test dataset** (Section 6) — Named entities with concrete values that all test scenarios reference. This prevents each test from inventing its own setup.
-6. **Draw feature boundaries explicitly** (Section 7) — If something belongs in an adjacent feature, say so and defer it.
+6. **Draw feature boundaries explicitly** (Section 7) — If an AC belongs to another existing feature, reference it. If it doesn't fit any existing feature, propose it as a new feature for the PRD (name + one-line description + which ACs it would cover).
 7. **Section 9 is conditional** — Only include it for features that produce or consume async events. When included, define schemas (CloudEvents-compatible), channels, delivery guarantees, and consumer idempotency strategy.
 8. **Internal interfaces (Section 4) define TDD boundaries** — Each method signature is a test-first contract. The task generator will use these to pair "write test → implement → test passes" tasks.
 
