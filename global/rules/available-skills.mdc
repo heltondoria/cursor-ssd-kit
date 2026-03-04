@@ -23,11 +23,14 @@ Template available at `~/.cursor/templates/CONVENTIONS.md`.
 | `/task-review` | Validate task list quality and spec coverage |
 | `/quality-gates` | Run all quality checks and report pass/fail |
 | `/impl-review` | Validate implementation against feature spec with scoring |
+| `/prd-import` | Import external PRD into SDD format |
 | `/scaffold` | Create new project with full tooling setup |
 | `/adopt` | Migrate existing project to unified tooling standards |
+| `/release` | Create a semver release with version bump, changelog, and git tag |
 
 # Available Agents
 
 | Agent | Purpose |
 |-------|---------|
 | `convention-checker` | Check code against project CONVENTIONS.md |
+| `security-bug-reviewer` | Detect security vulnerabilities and bug patterns with CWE-specialized analysis |
