@@ -161,3 +161,9 @@ Initial request: $ARGUMENTS
 - Do NOT prescribe solutions — help the user discover their own answers
 - Keep the final document between 50-100 lines — concise and purposeful
 - The discovery document is about *purpose and strategy*, not *requirements*
+
+## Commit
+
+```
+docs(discovery): create discovery for <project-name>
+```

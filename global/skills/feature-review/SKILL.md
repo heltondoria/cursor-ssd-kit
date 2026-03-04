@@ -126,7 +126,7 @@ Verify the spec explicitly delineates what is IN and OUT of scope:
 
 Validate the spec follows the template rules:
 
-- [ ] **150-300 lines**: Spec is within target range (under 150 = missing content, over 300 = over-specifying)
+- [ ] **~300 lines target (soft)**: Aim for 150-300 lines. Specs over 300 lines should be checked for PRD repetition or verbose descriptions, but completeness is never sacrificed for brevity. Under 150 likely means missing content.
 - [ ] **No PRD repetition**: Spec references PRD sections instead of copying AC text or descriptions verbatim
 - [ ] **Every section adds value**: No section is a mere restatement of the PRD — each adds implementation detail
 
@@ -179,7 +179,7 @@ PRD AC  | Spec §              | Test Scenarios      | Status
 AC1     | § 2.1, § 4 (model)  | § 6.1 #7, § 6.2 #7 | COVERED
 AC2     | § 3, § 4 (service)  | § 6.1 #1-#6        | COVERED
 AC3     | → F8 (frontend)     | —                   | OTHER FEATURE
-AC6     | → New: Adv. Filter  | —                   | PROPOSED
+AC4     | → New: Adv. Filter  | —                   | PROPOSED
 AC5     | § 7.2 (F6 consumes) | § 6.1 #8            | COVERED
 ```
 

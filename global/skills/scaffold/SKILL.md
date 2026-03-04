@@ -202,3 +202,10 @@ Report success with a summary of created files and any post-scaffold instruction
 - Do NOT initialize a git repo — the user manages git separately
 - Do NOT create a PRD — the user can use `/prd` for that separately
 - Ask the user for a one-line description before generating files
+
+## Commit
+
+Commit the scaffolded project:
+- Type: `chore`
+- Scope: `scaffold`
+- Example: `chore(scaffold): create project structure for <project-name>`

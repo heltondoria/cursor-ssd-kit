@@ -274,3 +274,10 @@ Next steps:
 ## Tone
 
 Be transparent about every change. The user should understand exactly what will change and why before any file is modified. When in doubt, preserve existing content and suggest the change instead of applying it.
+
+## Commit
+
+Commit the migration changes:
+- Type: `chore`
+- Scope: `adopt`
+- Example: `chore(adopt): migrate <project-name> to unified tooling`

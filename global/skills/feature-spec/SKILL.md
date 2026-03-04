@@ -306,7 +306,7 @@ class ScopeAssignedPayload(BaseModel):
 
 1. **REFERENCE, don't repeat** — If the PRD already specifies something, point to it (e.g., "See PRD § 6.3, row F6"). Don't copy ACs or descriptions verbatim.
 2. **FOCUS on implementation gaps** — What the PRD doesn't cover: exact method signatures, default values, data shapes, SQL, test data.
-3. **TARGET 150-300 lines** — If longer, you're over-specifying. If shorter, you're missing design decisions.
+3. **TARGET ~300 lines** — Aim for 150-300 lines, but completeness takes priority over brevity. If longer, look for PRD repetition or verbose descriptions to trim — but never cut substantive content to hit a line count.
 4. **Every section must add NEW information** not present in the PRD.
 5. **Include a reference test dataset** (Section 6) — Named entities with concrete values that all test scenarios reference. This prevents each test from inventing its own setup.
 6. **Draw feature boundaries explicitly** (Section 7) — If an AC belongs to another existing feature, reference it. If it doesn't fit any existing feature, propose it as a new feature for the PRD (name + one-line description + which ACs it would cover).
@@ -334,3 +334,10 @@ The primary output is the feature spec file. The user then runs:
 ## Tone
 
 Be precise and analytical. The spec is a technical contract — every statement should be verifiable against the codebase. When making design decisions, always explain the rationale and what alternatives were rejected.
+
+## Commit
+
+Commit the generated feature spec:
+- Type: `docs`
+- Scope: feature ID (e.g., `F6`)
+- Example: `docs(F6): generate feature spec for <feature-slug>`

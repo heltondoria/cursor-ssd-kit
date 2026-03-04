@@ -233,3 +233,9 @@ Use:
 - Focus on high-level concepts and architecture
 - Use research tools when available to validate technology recommendations
 - If tools are unavailable, note where additional research would be valuable
+
+## Commit
+
+```
+docs(prd): create PRD for <project-name>
+```
