@@ -20,7 +20,7 @@ bash install.sh
 
 This will:
 1. Back up your existing `~/.cursor/` configuration (if any)
-2. Copy all rules, skills, hooks, agents, and templates to `~/.cursor/`
+2. Copy all rules, skills, hooks, agents, templates, and scripts to `~/.cursor/`
 3. Make hook scripts executable
 4. Report a summary of installed components
 
@@ -37,6 +37,7 @@ cp -r global/skills ~/.cursor/
 cp -r global/hooks ~/.cursor/
 cp -r global/agents ~/.cursor/
 cp -r global/templates ~/.cursor/
+cp -r global/scripts ~/.cursor/
 cp global/hooks.json ~/.cursor/
 
 # Make hooks executable
@@ -49,7 +50,7 @@ chmod +x ~/.cursor/hooks/*.sh
 
 ```
 /discovery ──> /discovery-review ──> /prd ──> /prd-review
-                                                  │
+                                      │             (or /prd-import)
                               /feature-spec <─────┘
                                     │
                               /feature-review
@@ -63,15 +64,18 @@ chmod +x ~/.cursor/hooks/*.sh
                               /quality-gates
                                     │
                               /impl-review
+                                    │
+                              /release
 ```
 
-### Skills (12)
+### Skills (14)
 
 | Skill | Purpose |
 |-------|---------|
 | `/discovery` | Discover the WHY behind a project (Golden Circle) |
 | `/discovery-review` | Validate discovery document completeness (6 criteria) |
 | `/prd` | Create PRD through guided questioning |
+| `/prd-import` | Import external PRD into SDD format |
 | `/prd-review` | Validate PRD completeness (11 criteria) |
 | `/feature-spec` | Refine a single PRD feature into detailed implementation spec |
 | `/feature-review` | Validate feature spec quality (8 criteria) |
@@ -81,6 +85,7 @@ chmod +x ~/.cursor/hooks/*.sh
 | `/impl-review` | Validate implementation against feature spec with scoring |
 | `/scaffold` | Create new project with full tooling setup |
 | `/adopt` | Migrate existing project to unified tooling standards |
+| `/release` | Create a semver release with version bump, changelog, and git tag |
 
 ### Rules (6)
 
@@ -104,11 +109,12 @@ Global rules applied to all projects:
 | `lint-typescript.sh` | After file edit (`*.{ts,tsx,js,jsx}`) | Auto-fix lint with Biome/ESLint |
 | `block-protected-files.sh` | Before tool use (`*.{env,lock}`) | Prevent editing sensitive files |
 
-### Agents (1)
+### Agents (2)
 
 | Agent | Purpose |
 |-------|---------|
 | `convention-checker` | Check code against project CONVENTIONS.md |
+| `security-bug-reviewer` | Detect security vulnerabilities and bug patterns with CWE-specialized analysis |
 
 ### Templates (7)
 
@@ -121,6 +127,24 @@ Global rules applied to all projects:
 | `tsconfig-strict.json` | Strict TypeScript config |
 | `biome.json` | Biome v2 strict linter+formatter config |
 | `gitlab-ci-snippets.md` | GitLab CI pipeline reference |
+
+### Scripts (1)
+
+| Script | Purpose |
+|--------|---------|
+| `sdd-metrics.py` | Extract SDD pipeline metrics from git history |
+
+## Pipeline Metrics
+
+Run `python ~/.cursor/scripts/sdd-metrics.py` to extract pipeline metrics from git history.
+Requires conventional commits with feature ID scopes (e.g., `feat(F6): ...`).
+
+```bash
+python ~/.cursor/scripts/sdd-metrics.py                      # Full report
+python ~/.cursor/scripts/sdd-metrics.py --json               # Machine-readable output
+python ~/.cursor/scripts/sdd-metrics.py --feature F6         # Single feature
+python ~/.cursor/scripts/sdd-metrics.py --period 2026-01:2026-03
+```
 
 ## Supported Stacks
 

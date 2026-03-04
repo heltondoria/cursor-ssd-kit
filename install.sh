@@ -31,7 +31,7 @@ for file in hooks.json; do
 done
 
 # Copy directories (merge, not replace)
-for dir in rules skills hooks agents templates; do
+for dir in rules skills hooks agents templates scripts; do
   if [[ -d "${SOURCE_DIR}/${dir}" ]]; then
     mkdir -p "${TARGET_DIR}/${dir}"
     cp -r "${SOURCE_DIR}/${dir}/." "${TARGET_DIR}/${dir}/"
@@ -68,3 +68,4 @@ count_items "${TARGET_DIR}/skills" "Skills"
 count_items "${TARGET_DIR}/hooks" "Hooks"
 count_items "${TARGET_DIR}/agents" "Agents"
 count_items "${TARGET_DIR}/templates" "Templates"
+count_items "${TARGET_DIR}/scripts" "Scripts"
