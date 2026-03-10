@@ -42,16 +42,26 @@ Cross-reference the spec against the PRD feature section:
 - [ ] **AC coverage**: Every AC listed in the PRD for this feature is addressed (covered directly OR redirected to an existing feature with justification)
 - [ ] **Uncovered ACs actionable**: ACs not covered are either part of another existing feature (with reference) or proposed as new features for the PRD (with name + description)
 - [ ] **Endpoints match**: API endpoints in spec § 3 match the PRD endpoint table for this feature
-- [ ] **Error scenarios match**: Spec § 5 covers all error rows from PRD § 6.3 for this feature
-- [ ] **Async/sync alignment**: Spec § 8.1 matches PRD § 12.1 for this feature
-- [ ] **Logging events match**: Spec § 8.2 covers events from PRD § 12.2 for this feature
+- [ ] **Error scenarios match**: Spec § 5 covers error scenarios described or implied by the feature's acceptance criteria in the PRD
+- [ ] **Async/sync alignment**: Spec § 8.1 async/sync decisions are consistent with the project's CONVENTIONS.md and the overall architecture described in the PRD
+- [ ] **Logging events match**: Spec § 8.2 defines logging events for all state-changing operations in the feature
 - [ ] **No PRD contradictions**: Spec does not contradict any PRD requirement (e.g., different default value, missing endpoint, wrong HTTP method)
 
-### 2. Spec Completeness (Template Compliance)
+### 2. Business Rule Compliance
+
+Cross-reference the spec against PRD § 4 (Business Rules and Shared Requirements):
+
+- [ ] **BR/SR IDs listed**: Spec § 1 includes a "Referenced BRs/SRs" line listing all applicable BR/SR IDs
+- [ ] **All referenced IDs exist**: Every BR/SR ID in the spec exists in PRD § 4 (no dangling references)
+- [ ] **No missing references**: The feature is listed in the "Applies to" column of BRs/SRs in the PRD that it should comply with
+- [ ] **Design decisions comply**: Design decisions in § 2.3 do not contradict any referenced BR or SR
+- [ ] **Test scenarios validate BRs**: At least one test scenario in § 6 validates each referenced BR
+
+### 3. Spec Completeness (Template Compliance)
 
 Verify all required sections exist and contain substantive content:
 
-- [ ] **§ 1 Summary** — Has What, Why, and PRD ACs list
+- [ ] **§ 1 Summary** — Has What, Why, PRD ACs list, and Referenced BRs/SRs line
 - [ ] **§ 2.1 Component Architecture** — Lists files with `[NEW]` or `[EXISTING — modify]` tags
 - [ ] **§ 2.2 Data Flow** — Shows input → processing → output for each operation
 - [ ] **§ 2.3 Key Design Decisions** — Table with columns: Decision, Choice, Rationale, Alternatives rejected. At least 3 decisions documented.
@@ -63,7 +73,7 @@ Verify all required sections exist and contain substantive content:
 - [ ] **§ 8 Convention Compliance** — Async/Sync table, Logging events table, SQL migration (if applicable)
 - [ ] **§ 9 Async Messaging** — Present only if feature uses async events; absent if purely request/response
 
-### 3. Internal Consistency
+### 4. Internal Consistency
 
 Check that the spec is internally coherent:
 
@@ -76,7 +86,7 @@ Check that the spec is internally coherent:
 - [ ] **§ 8.2 ↔ § 4**: Every state-changing method has a logging event
 - [ ] **Method signatures consistent**: Return types, parameter names, and exception types are consistent between repository and service layer signatures
 
-### 4. Codebase Consistency
+### 5. Codebase Consistency
 
 Verify the spec is grounded in the actual codebase:
 
@@ -90,7 +100,7 @@ Verify the spec is grounded in the actual codebase:
 - [ ] **Router pattern**: New endpoints follow existing DishkaRoute + FromDishka pattern
 - [ ] **Import compatibility**: New exports won't cause circular imports
 
-### 5. Design Decision Quality
+### 6. Design Decision Quality
 
 Evaluate the design decisions in § 2.3:
 
@@ -101,7 +111,7 @@ Evaluate the design decisions in § 2.3:
 - [ ] **Backward compatible**: Decisions don't break existing functionality (especially for data model changes)
 - [ ] **Migration strategy clear**: If changing stored data, the migration path is defined
 
-### 6. Test Scenario Coverage
+### 7. Test Scenario Coverage
 
 Verify test scenarios are comprehensive:
 
@@ -112,7 +122,7 @@ Verify test scenarios are comprehensive:
 - [ ] **No missing boundary**: Boundary conditions identified (empty list, single item, duplicates, max values)
 - [ ] **Integration scenarios**: At least one scenario tests cross-layer behavior (e.g., "roundtrip via save/load")
 
-### 7. Feature Boundary Clarity
+### 8. Feature Boundary Clarity
 
 Verify the spec explicitly delineates what is IN and OUT of scope:
 
@@ -122,7 +132,7 @@ Verify the spec explicitly delineates what is IN and OUT of scope:
 - [ ] **Dependencies declared**: § 7.1 lists all features this one depends on
 - [ ] **Consumers declared**: § 7.2 lists all features that will use this one's outputs
 
-### 8. Spec Size and Focus
+### 9. Spec Size and Focus
 
 Validate the spec follows the template rules:
 
@@ -140,15 +150,16 @@ PRD Feature: <feature ID and name>
 ========================================
 
   1.  PRD Alignment:            PASS / PARTIAL / FAIL
-  2.  Spec Completeness:        PASS / PARTIAL / FAIL
-  3.  Internal Consistency:     PASS / PARTIAL / FAIL
-  4.  Codebase Consistency:     PASS / PARTIAL / FAIL
-  5.  Design Decisions:         PASS / PARTIAL / FAIL
-  6.  Test Coverage:            PASS / PARTIAL / FAIL
-  7.  Feature Boundaries:       PASS / PARTIAL / FAIL
-  8.  Spec Size & Focus:        PASS / PARTIAL / FAIL
+  2.  BR/SR Compliance:         PASS / PARTIAL / FAIL
+  3.  Spec Completeness:        PASS / PARTIAL / FAIL
+  4.  Internal Consistency:     PASS / PARTIAL / FAIL
+  5.  Codebase Consistency:     PASS / PARTIAL / FAIL
+  6.  Design Decisions:         PASS / PARTIAL / FAIL
+  7.  Test Coverage:            PASS / PARTIAL / FAIL
+  8.  Feature Boundaries:       PASS / PARTIAL / FAIL
+  9.  Spec Size & Focus:        PASS / PARTIAL / FAIL
   ----------------------------------------
-  Overall:                      X/8 PASS
+  Overall:                      X/9 PASS
 ```
 
 Scoring:
@@ -167,20 +178,20 @@ For each PARTIAL or FAIL item, provide:
   Fix: <concrete suggestion with example text>
 ```
 
-Categories: `PRD-ALIGN`, `COMPLETENESS`, `CONSISTENCY`, `CODEBASE`, `DESIGN`, `TESTS`, `BOUNDARY`, `SIZE`
+Categories: `PRD-ALIGN`, `BR-COMPLY`, `COMPLETENESS`, `CONSISTENCY`, `CODEBASE`, `DESIGN`, `TESTS`, `BOUNDARY`, `SIZE`
 
 ### Cross-Reference Matrix
 
 Show the traceability between PRD ACs, spec sections, and test scenarios:
 
 ```
-PRD AC  | Spec §              | Test Scenarios      | Status
---------|----------------------|---------------------|--------
-AC1     | § 2.1, § 4 (model)  | § 6.1 #7, § 6.2 #7 | COVERED
-AC2     | § 3, § 4 (service)  | § 6.1 #1-#6        | COVERED
-AC3     | → F8 (frontend)     | —                   | OTHER FEATURE
-AC4     | → New: Adv. Filter  | —                   | PROPOSED
-AC5     | § 7.2 (F6 consumes) | § 6.1 #8            | COVERED
+PRD AC  | BRs/SRs  | Spec §              | Test Scenarios      | Status
+--------|----------|----------------------|---------------------|--------
+AC1     | BR1, SR2 | § 2.1, § 4 (model)  | § 6.1 #7, § 6.2 #7 | COVERED
+AC2     | SR1      | § 3, § 4 (service)  | § 6.1 #1-#6        | COVERED
+AC3     | —        | → F8 (frontend)     | —                   | OTHER FEATURE
+AC4     | —        | → New: Adv. Filter  | —                   | PROPOSED
+AC5     | BR2      | § 7.2 (F6 consumes) | § 6.1 #8            | COVERED
 ```
 
 ## Tone

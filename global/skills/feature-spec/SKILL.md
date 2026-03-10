@@ -26,7 +26,7 @@ If no argument is provided, search for `PRD-*.md` files in the workspace, read t
 
 Read these files to understand the project:
 
-1. The PRD file — extract the target feature section (description, ACs, endpoints, error scenarios, test strategy)
+1. The PRD file — extract the target feature section (description, ACs, endpoints, error scenarios, test strategy) AND § 4 (Business Rules and Shared Requirements) — identify which BRs/SRs the feature references
 2. `.cursor/rules/ (project rules)` — project overview, architecture, commands
 3. `CONVENTIONS.md` (if exists) — code conventions, patterns, naming
 
@@ -101,6 +101,7 @@ If the user specifies a different path, use that instead.
 **What**: [one sentence — what the feature does]
 **Why**: [one sentence — the user problem this solves]
 **PRD ACs**: [list AC IDs]
+**Referenced BRs/SRs**: [BR1, BR3, SR2 — IDs from PRD § 4 that this feature must comply with]
 
 ---
 
@@ -304,7 +305,7 @@ class ScopeAssignedPayload(BaseModel):
 
 ## Template Rules
 
-1. **REFERENCE, don't repeat** — If the PRD already specifies something, point to it (e.g., "See PRD § 6.3, row F6"). Don't copy ACs or descriptions verbatim.
+1. **REFERENCE, don't repeat** — If the PRD already specifies something, point to it (e.g., "See PRD § 5, F6 ACs" or "Per BR1 in PRD § 4"). Don't copy ACs or descriptions verbatim.
 2. **FOCUS on implementation gaps** — What the PRD doesn't cover: exact method signatures, default values, data shapes, SQL, test data.
 3. **TARGET ~300 lines** — Aim for 150-300 lines, but completeness takes priority over brevity. If longer, look for PRD repetition or verbose descriptions to trim — but never cut substantive content to hit a line count.
 4. **Every section must add NEW information** not present in the PRD.
@@ -312,6 +313,7 @@ class ScopeAssignedPayload(BaseModel):
 6. **Draw feature boundaries explicitly** (Section 7) — If an AC belongs to another existing feature, reference it. If it doesn't fit any existing feature, propose it as a new feature for the PRD (name + one-line description + which ACs it would cover).
 7. **Section 9 is conditional** — Only include it for features that produce or consume async events. When included, define schemas (CloudEvents-compatible), channels, delivery guarantees, and consumer idempotency strategy.
 8. **Internal interfaces (Section 4) define TDD boundaries** — Each method signature is a test-first contract. The task generator will use these to pair "write test → implement → test passes" tasks.
+9. **Reference BRs/SRs by ID, never copy content** — In § 1, list the BR/SR IDs from PRD § 4. In design decisions and implementation notes, reference by ID (e.g., "Per BR1, all prices use integer cents"). Never copy the BR/SR text — the PRD is the single source of truth.
 
 ## Phase 3: Present and Iterate
 
