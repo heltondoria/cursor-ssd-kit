@@ -14,7 +14,7 @@ cursor-ssd-kit/
 ├── install.sh             # Installation script (copies to ~/.cursor/)
 └── global/                # → ~/.cursor/
     ├── rules/             # 6 .mdc rule files (replaces CLAUDE.md global)
-    ├── skills/            # 14 skills (SDD pipeline)
+    ├── skills/            # 15 skills (SDD pipeline)
     ├── hooks/             # 4 shell scripts (lint, typecheck, block)
     ├── hooks.json         # Cursor hooks configuration
     ├── agents/            # 2 agents (convention-checker, security-bug-reviewer)

@@ -53,6 +53,8 @@ chmod +x ~/.cursor/hooks/*.sh
                                       │             (or /prd-import)
                               /feature-spec <─────┘
                                     │
+                              /traceability (optional)
+                                    │
                               /feature-review
                                     │
                               /feature-to-tasks
@@ -68,7 +70,7 @@ chmod +x ~/.cursor/hooks/*.sh
                               /release
 ```
 
-### Skills (14)
+### Skills (15)
 
 | Skill | Purpose |
 |-------|---------|
@@ -76,9 +78,10 @@ chmod +x ~/.cursor/hooks/*.sh
 | `/discovery-review` | Validate discovery document completeness (6 criteria) |
 | `/prd` | Create PRD through guided questioning |
 | `/prd-import` | Import external PRD into SDD format |
-| `/prd-review` | Validate PRD completeness (11 criteria) |
+| `/prd-review` | Validate PRD completeness (13 criteria) |
 | `/feature-spec` | Refine a single PRD feature into detailed implementation spec |
-| `/feature-review` | Validate feature spec quality (8 criteria) |
+| `/traceability` | Analyze BR/SR cross-references between PRD and feature specs |
+| `/feature-review` | Validate feature spec quality (9 criteria) |
 | `/feature-to-tasks` | Generate TDD-structured task list from a feature spec |
 | `/task-review` | Validate task list quality and spec coverage |
 | `/quality-gates` | Run all quality checks and report pass/fail |
