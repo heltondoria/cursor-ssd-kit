@@ -45,39 +45,49 @@ Initial request: $ARGUMENTS
 
 1. **Core features and functionality**
    - "Tell me about your app idea at a high level."
-   - "What are the 3-5 core features that make this app valuable to users?"
+   - "What are the core features that make this app valuable to users? List as many as needed — we'll enumerate them as F1, F2, ... F{N}."
    - "Which features are must-haves for the initial version?"
 
-2. **Target audience**
+2. **Business context and domain**
+   - "What business domain does this app operate in?"
+   - "Who are the key stakeholders beyond end users? (e.g., ops team, compliance, partners)"
+   - "Are there domain-specific terms your team uses? Let's build a glossary so the PRD is unambiguous."
+
+3. **Business rules and shared requirements**
+   - "Are there rules that apply across multiple features? (e.g., 'all monetary values use cents, never floats', 'audit log every write operation')"
+   - "Any regulatory or compliance requirements? (e.g., GDPR data retention, PCI for payments)"
+   - "Any cross-cutting technical requirements? (e.g., 'all endpoints require authentication', 'all responses include request_id')"
+
+4. **Target audience**
    - "Who is your target audience?"
    - "What problem does this app solve for your target users?"
 
-3. **Platform**
+5. **Platform**
    - "What platform are you targeting - web, mobile, desktop, or a combination?"
 
-4. **User interface and experience**
+6. **User interface and experience**
    - "Do you have any concepts for the user interface?"
    - "Are there apps you admire that have a similar feel to what you want?"
 
-5. **Data storage and management**
+7. **Data storage and management**
    - "What kind of data will your app need to store and manage?"
 
-6. **Authentication and security**
+8. **Authentication and security**
    - "Will users need to create accounts? What security considerations are important?"
 
-7. **Third-party integrations**
+9. **Third-party integrations**
    - "Will your app need to integrate with any external services or APIs?"
 
-8. **Scalability**
-   - "How many users do you expect initially? What about in the future?"
+10. **Scalability**
+    - "How many users do you expect initially? What about in the future?"
 
-9. **Technical challenges**
-   - "What technical challenges do you anticipate?"
+11. **Technical challenges**
+    - "What technical challenges do you anticipate?"
 
-10. **Costs**
+12. **Costs**
     - "Have you considered potential costs like APIs, hosting, or subscriptions?"
 
-11. **Diagrams/wireframes**
+13. **Diagrams/wireframes**
     - "Do you have any diagrams or wireframes you'd like to share?"
 
 **Questioning Patterns**:
@@ -126,49 +136,78 @@ Given your requirements for [specific need], I'd recommend **Option X** because.
 - Problem being solved
 - Key objectives and success metrics
 
-## 2. Target Audience
+## 2. Business Context
+- Business domain and industry vertical
+- Key stakeholders (beyond end users) with their concerns
+- Domain glossary / ubiquitous language (term → definition)
+- State machines (if applicable — e.g., order lifecycle, subscription states)
+
+> Can be brief for small projects — a few bullet points suffice.
+
+## 3. Target Audience
 - Primary users
 - User personas
 - User needs and pain points
 
-## 3. Core Features and Functionality
+## 4. Business Rules and Shared Requirements
+Business rules (BR) are domain constraints that span multiple features.
+Shared requirements (SR) are cross-cutting technical requirements.
+Each MUST have a canonical ID for cross-referencing in feature specs.
+
+### Business Rules
+| ID | Rule | Applies to |
+|----|------|------------|
+| BR1 | All monetary values stored as integer cents | F1, F3 |
+| BR2 | Users cannot delete their own account while subscribed | F2, F5 |
+
+### Shared Requirements
+| ID | Requirement | Applies to |
+|----|-------------|------------|
+| SR1 | All write endpoints require authentication | All features |
+| SR2 | Audit log every state change | F1, F2, F4 |
+
+> Can be brief for small projects. Even a single BR adds value.
+
+## 5. Core Features and Functionality
 For each feature include:
-- Feature name and description
+- Feature ID and name (F1, F2, ... F{N} — no artificial limit)
+- Description
+- Referenced BRs/SRs (by ID)
 - User stories
 - Acceptance criteria
 - Technical considerations
 
-## 4. Technical Stack Recommendations
+## 6. Technical Stack Recommendations
 - Frontend framework
 - Backend/API
 - Database
 - Hosting/infrastructure
 - Third-party services
 
-## 5. Conceptual Data Model
+## 7. Conceptual Data Model
 - Entities with fields, types, and relationships
 - Data flow diagrams (if applicable)
 
-## 6. UI Design Principles
+## 8. UI Design Principles
 - Design philosophy
 - Key screens/views
 - User flow
 
-## 7. Security Considerations
+## 9. Security Considerations
 - Authentication method
 - Authorization rules
 - Data protection
 
-## 8. Implementation Order
+## 10. Implementation Phases
 - Recommended implementation sequence (respecting feature dependencies)
 - Each feature is self-contained — no partial features or "deferred to phase N"
 
-## 9. Potential Challenges and Solutions
+## 11. Potential Challenges and Solutions
 - Technical challenges
 - Business challenges
 - Mitigation strategies
 
-## 10. Future Expansion Possibilities
+## 12. Future Expansion Possibilities
 - Potential features for future versions
 - Scalability considerations
 ```
@@ -197,6 +236,17 @@ Use:
 - Implement JWT token-based session management
 - Required user profile fields: email (string, unique), name (string), avatar (image URL)
 - Acceptance criteria: Users can create accounts, log in via both methods, recover passwords, and maintain persistent sessions across app restarts
+```
+
+**Business rule references in features**:
+Instead of: "Prices should be stored correctly"
+
+Use:
+```
+### F3: Billing Service
+**Referenced BRs/SRs**: BR1, SR1, SR2
+BR1 (integer cents) applies to all price fields.
+SR2 (audit logging) applies to subscription state changes.
 ```
 
 ---
@@ -236,6 +286,7 @@ Use:
 
 ## Commit
 
-```
-docs(prd): create PRD for <project-name>
-```
+Commit the generated PRD:
+- Type: `docs`
+- Scope: `prd`
+- Example: `docs(prd): create PRD for <project-name>`

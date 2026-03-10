@@ -6,7 +6,7 @@ argument-hint: <path-to-external-prd>
 
 # PRD Import
 
-Import an external PRD (any format) into the standard SDD format. Preserves all original content, reorganizing it into the 10 sections expected by the pipeline.
+Import an external PRD (any format) into the standard SDD format. Preserves all original content, reorganizing it into the 12 sections expected by the pipeline.
 
 **Pipeline position**: alternative entry point — replaces `/prd` when an external PRD already exists.
 ```
@@ -33,11 +33,11 @@ Also read (if they exist):
 2. **Inventory the content** — list each section/block of the original document with:
    - Original title/heading
    - Content summary (1-2 lines)
-   - Target SDD section (which of the 10 sections will receive this content)
+   - Target SDD section (which of the 12 sections will receive this content)
    - Flag: `direct` (maps 1:1), `split` (content goes to >1 section), `enrich` (target section needs supplementation)
 3. **Identify gaps** — SDD format sections that have no corresponding content in the original PRD:
    - Mark as `MISSING` — needs to be generated or asked from the user
-4. **Identify extra content** — blocks from the original PRD that don't map to any of the 10 sections:
+4. **Identify extra content** — blocks from the original PRD that don't map to any of the 12 sections:
    - Will be included as Appendix in the final PRD
 
 Show the inventory to the user in table format:
@@ -45,19 +45,21 @@ Show the inventory to the user in table format:
 ```
 Content Map
 ===========
-Source Section                    -> Target SDD Section         Status
----------------------------------------------------------------------
-"1. Introduction"                 -> 1. Overview                direct
-"2. Market Analysis"              -> 2. Target Audience          split (also -> 9)
-"3. Requirements"                 -> 3. Core Features            direct
-"Technical Architecture"          -> 4. Tech Stack               direct
-"Database Design"                 -> 5. Data Model               direct
-(no source)                       -> 6. UI Design                MISSING
-"Auth & Permissions"              -> 7. Security                 direct
-"Roadmap"                         -> 8. Implementation Order     direct
-(no source)                       -> 9. Challenges               MISSING
-"Vision & Future"                 -> 10. Future Expansion        direct
-"Compliance Notes"                -> Appendix                    extra
+Source Section                    -> Target SDD Section              Status
+---------------------------------------------------------------------------
+"1. Introduction"                 -> 1. Overview                     direct
+(no source)                       -> 2. Business Context             MISSING
+"2. Market Analysis"              -> 3. Target Audience              split (also -> 11)
+(no source)                       -> 4. Business Rules & Shared Reqs MISSING
+"3. Requirements"                 -> 5. Core Features                direct
+"Technical Architecture"          -> 6. Tech Stack                   direct
+"Database Design"                 -> 7. Data Model                   direct
+(no source)                       -> 8. UI Design                    MISSING
+"Auth & Permissions"              -> 9. Security                     direct
+"Roadmap"                         -> 10. Implementation Phases       direct
+(no source)                       -> 11. Challenges                  MISSING
+"Vision & Future"                 -> 12. Future Expansion            direct
+"Compliance Notes"                -> Appendix                        extra
 ```
 
 Ask the user for confirmation: **"Does this mapping look correct? Any adjustments?"**
@@ -83,7 +85,16 @@ This phase is critical — the SDD pipeline depends on enumerated features (F1, 
    - Acceptance criteria (if they exist in the original, preserve verbatim; if not, derive from content)
    - Priority (must-have vs nice-to-have) — if not explicit, ask the user
 
-4. Show the feature list to the user:
+4. **Extract or derive Business Rules and Shared Requirements** — look for:
+   - Explicit business rules ("must", "shall", "always", "never" statements that span features)
+   - Regulatory/compliance references
+   - Cross-cutting technical constraints
+   - Assign IDs: BR1, BR2... for business rules; SR1, SR2... for shared requirements
+   - Map each to the features it applies to
+
+Show to user and ask for confirmation.
+
+5. Show the feature list to the user:
 
 ```
 Extracted Features
@@ -103,21 +114,23 @@ Ask for confirmation and adjustments.
 
 ## Phase 3: Conversion
 
-Generate the PRD in SDD format with the 10 mandatory sections:
+Generate the PRD in SDD format with the 12 mandatory sections:
 
 ```markdown
 # PRD: [Project Name]
 
 ## 1. App Overview and Objectives
-## 2. Target Audience
-## 3. Core Features and Functionality
-## 4. Technical Stack Recommendations
-## 5. Conceptual Data Model
-## 6. UI Design Principles
-## 7. Security Considerations
-## 8. Implementation Order
-## 9. Potential Challenges and Solutions
-## 10. Future Expansion Possibilities
+## 2. Business Context
+## 3. Target Audience
+## 4. Business Rules and Shared Requirements
+## 5. Core Features and Functionality
+## 6. Technical Stack Recommendations
+## 7. Conceptual Data Model
+## 8. UI Design Principles
+## 9. Security Considerations
+## 10. Implementation Phases
+## 11. Potential Challenges and Solutions
+## 12. Future Expansion Possibilities
 ```
 
 ### Conversion rules
@@ -132,7 +145,7 @@ Generate the PRD in SDD format with the 10 mandatory sections:
    - Python: modern type hints (`list[T]`, `X | None`), Google docstrings, structured logging
    - TypeScript: strict types, Biome formatting
 
-3. **Features in section 3** must follow the format:
+3. **Features in section 5** must follow the format:
    ```markdown
    ### F1: Feature Name
    Description...
@@ -142,7 +155,7 @@ Generate the PRD in SDD format with the 10 mandatory sections:
    - AC2: ...
    ```
 
-4. **Section 8 (Implementation Order)** must list features in implementation order respecting dependencies between them.
+4. **Section 10 (Implementation Phases)** must list features in implementation order respecting dependencies between them.
 
 5. **Extra content** (that doesn't fit any section) goes to an Appendix at the end:
    ```markdown
@@ -155,7 +168,7 @@ Generate the PRD in SDD format with the 10 mandatory sections:
 
 ## Phase 4: Validation
 
-1. Mentally run the 11 criteria from `/prd-review` on the generated PRD
+1. Mentally run the 13 criteria from `/prd-review` on the generated PRD
 2. For each criterion, report status: PASS, PARTIAL, MISSING
 3. Show summary to the user:
 
@@ -173,6 +186,8 @@ Pre-validation (prd-review criteria)
  9. Non-Functional Reqs       PASS
 10. Development Phases        PASS
 11. Convention Compliance     PARTIAL - code examples need adaptation
+12. Business Context          PARTIAL - domain identified, glossary missing
+13. Business Rules & SRs      PASS - 3 BRs, 2 SRs extracted
 
 Recommendation: Run `/prd-review` after filling TODOs in sections 6, 7.
 ```
@@ -189,7 +204,8 @@ PRD Import Complete
 Source:       docs/external-prd.md (2130 lines)
 Output:       PRD-MyProject.md (850 lines)
 Features:     12 features extracted (F1-F12)
-Sections:     8/10 complete, 2 with TODOs
+BRs/SRs:      3 BRs, 2 SRs extracted
+Sections:     10/12 complete, 2 with TODOs
 Appendix:     2 sections preserved from original
 
 Next steps:
@@ -209,6 +225,9 @@ Next steps:
 - Content that doesn't fit any section goes to Appendix, never discarded
 - If the original PRD already has acceptance criteria, preserve them verbatim
 - Adapt code examples to the detected stack (Python/TypeScript) and project conventions
+- Business Rules use IDs BR1, BR2, ...; Shared Requirements use IDs SR1, SR2, ...
+- Each BR/SR MUST have an "Applies to" column mapping to feature IDs (F1, F2, ...)
+- Features in § 5 MUST include a "Referenced BRs/SRs" line listing applicable IDs
 
 ---
 

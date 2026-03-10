@@ -85,6 +85,20 @@ Evaluate the PRD against each of these criteria. For each item, report **PASS**,
 - [ ] Import order follows project conventions
 - [ ] Async/sync decisions explicit
 
+### 12. Business Context
+- [ ] Business domain identified (industry, vertical, or problem space)
+- [ ] Key stakeholders listed (beyond end users — ops, compliance, partners)
+- [ ] Domain glossary present (at least key terms that could be ambiguous)
+- [ ] State machines documented (if applicable — lifecycle states and transitions)
+
+### 13. Business Rules & Shared Requirements
+- [ ] Every business rule has a canonical ID (BR1, BR2, ...)
+- [ ] Every shared requirement has a canonical ID (SR1, SR2, ...)
+- [ ] Each BR/SR has an "Applies to" column referencing feature IDs
+- [ ] No contradictions between BRs (e.g., BR1 says "store as cents", BR3 says "store as float")
+- [ ] Features in § 5 reference relevant BRs/SRs (at least high-impact features)
+- [ ] No orphan BRs/SRs (every BR/SR is referenced by at least one feature)
+
 ## Output Format
 
 ```
@@ -102,8 +116,10 @@ PRD Review -- <PRD filename>
   9.  Non-Functional:        PASS / PARTIAL / MISSING
  10.  Development Phases:    PASS / PARTIAL / MISSING
  11.  Convention Compliance: PASS / PARTIAL / MISSING
+ 12.  Business Context:      PASS / PARTIAL / MISSING
+ 13.  Business Rules & SRs:  PASS / PARTIAL / MISSING
   ----------------------------------------
-  Overall:                   X/11 PASS
+  Overall:                   X/13 PASS
 
 Findings:
 ```
