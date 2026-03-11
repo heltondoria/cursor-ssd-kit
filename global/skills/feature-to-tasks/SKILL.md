@@ -81,8 +81,8 @@ Each task must be:
 **For each method in § 4 (Internal Interfaces), generate a RED-GREEN pair:**
 
 ```markdown
-- [ ] Write failing tests for `method_name` in `tests/<test_file>.py` -- Test scenarios: <list from § 6 that target this method>. Assert signatures, return types, exceptions. Tests must FAIL (RED) because the method does not exist yet.
-- [ ] Implement `method_name` in `src/<package>/<file>.py` -- <signature from § 4>. <behavior summary>. All tests from previous task must PASS (GREEN). After GREEN, commit: `feat(F{N}): implement method_name`
+- [ ] Write failing tests for `method_name` (§ 4.X) in `tests/<test_file>.py` -- Test scenarios: H1, H2 (§ 6.1), EC3 (§ 6.2), ER1 (§ 6.3). Assert signatures, return types, exceptions per § 5 #N. Tests must FAIL (RED) because the method does not exist yet.
+- [ ] Implement `method_name` (§ 4.X) in `src/<package>/<file>.py` -- <signature from § 4>. <behavior summary>. All tests from previous task must PASS (GREEN). After GREEN, commit: `feat(F{N}): implement method_name`
 ```
 
 **The RED task always comes before the GREEN task.** This ensures:
@@ -150,8 +150,9 @@ Each task must be:
 
 ### TDD Rationale
 Each RED-GREEN pair targets one method from the feature spec § 4.
-Tests are written against the method signature and test scenarios from § 6.
+Tests are written against the method signature (§ 4.X) and test scenarios (§ 6.Y).
 Implementation is minimal — just enough to make the tests pass.
+Every task annotates its source spec section inline for traceability.
 
 ### Implementation Order Rationale
 1. <first> — <why>
@@ -178,10 +179,11 @@ Implementation is minimal — just enough to make the tests pass.
 - List specific test scenarios from § 6 that target this method
 - Include the assertion pattern (e.g., "assert result.scope == 'auth'", "assert raises NodeNotFoundError")
 - The test MUST reference the method signature from § 4 even though the method doesn't exist yet
+- **Annotate with source spec sections inline** — e.g., `(§ 4.2)` after the method name, `(§ 6.1)` after scenario codes, `(§ 5 #3)` after error references. A reviewer must be able to trace every task back to the spec without decoding scenario codes.
 
 ### For GREEN (implementation) tasks:
 - Name the target file explicitly
-- Include the full method signature from § 4
+- Include the full method signature from § 4, annotated with the subsection: `method_name (§ 4.X)`
 - Reference "all tests from previous RED task must pass"
 - Do NOT add new test scenarios in GREEN tasks — tests were already written
 - **Include a commit directive** — after tests pass, commit with conventional commit format using the feature scope (e.g., `feat(F6): implement method_name`). This ensures granular, traceable history instead of a single monolithic commit per feature
@@ -189,6 +191,7 @@ Implementation is minimal — just enough to make the tests pass.
 ### For structural tasks (models, schema, wiring):
 - Name the target file explicitly
 - Include exact field names, types, SQL, or configuration
+- Annotate with source spec section: `(§ 2.1)` for architecture, `(§ 8.3)` for migrations
 - These don't need RED-GREEN pairs — they are verified by quality gates (lint, type check)
 
 ### For event tasks (if applicable):
@@ -220,6 +223,7 @@ If the user specifies a different output path, use that instead.
 8. **Do NOT include tasks for features other than the one specified**
 9. **Do NOT duplicate test scenarios** — each scenario from § 6 appears in exactly one RED task
 10. **Commit after every GREEN** — each GREEN task must include a commit directive so implementation progress is captured incrementally, not as a single commit at the end
+11. **Inline § traceability** — every task must include at least one `(§ X.Y)` annotation referencing the spec section it derives from. Scenario codes alone (H1, ER4) are not sufficient — they must be accompanied by their source section (e.g., `H1, H2 (§ 6.1), ER4 (§ 6.3)`). This allows a reviewer to verify coverage without the spec open side-by-side
 
 ## Tone
 

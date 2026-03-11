@@ -24,6 +24,7 @@ Before reviewing, read these files:
 2. **The PRD** — extract the matching feature section (by feature ID from the spec header). Look for `PRD-*.md` in workspace root.
 3. **`.cursor/rules/ (project rules)`** — project overview, architecture, commands
 4. **`CONVENTIONS.md`** (if exists) — code conventions
+5. **`.specs/DECISIONS.md`** (if exists) — cross-feature design decisions to validate consistency
 
 Then **explore the codebase** to verify claims in the spec:
 
@@ -85,6 +86,7 @@ Check that the spec is internally coherent:
 - [ ] **§ 2.1 ↔ § 4**: Every file in the architecture has at least one method in § 4, and vice versa
 - [ ] **§ 8.2 ↔ § 4**: Every state-changing method has a logging event
 - [ ] **Method signatures consistent**: Return types, parameter names, and exception types are consistent between repository and service layer signatures
+- [ ] **Cross-feature consistency**: Design decisions in § 2.3 do not contradict patterns, models, or interfaces recorded in `.specs/DECISIONS.md` (if it exists). Shared models use compatible field types and naming.
 
 ### 5. Codebase Consistency
 
@@ -99,6 +101,7 @@ Verify the spec is grounded in the actual codebase:
 - [ ] **Service pattern**: New service methods follow the existing `async def` + `self._repository` pattern
 - [ ] **Router pattern**: New endpoints follow existing DishkaRoute + FromDishka pattern
 - [ ] **Import compatibility**: New exports won't cause circular imports
+- [ ] **DECISIONS.md interfaces**: If the spec consumes interfaces listed in `.specs/DECISIONS.md`, the method signatures and types are compatible
 
 ### 6. Design Decision Quality
 

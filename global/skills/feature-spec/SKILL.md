@@ -29,6 +29,7 @@ Read these files to understand the project:
 1. The PRD file — extract the target feature section (description, ACs, endpoints, error scenarios, test strategy) AND § 4 (Business Rules and Shared Requirements) — identify which BRs/SRs the feature references
 2. `.cursor/rules/ (project rules)` — project overview, architecture, commands
 3. `CONVENTIONS.md` (if exists) — code conventions, patterns, naming
+4. `.specs/DECISIONS.md` (if exists) — cross-feature design decisions from previously generated specs. Use this to align patterns, reuse shared models, and respect existing interface contracts. If this is the first feature being specified, this file won't exist yet.
 
 ### 1.2 Explore the Codebase (or Establish Foundations)
 
@@ -64,6 +65,8 @@ You must decide and document:
 
 Reference the PRD's tech stack and conventions sections when making these foundational choices. Each decision establishes a precedent that other features will follow.
 
+If `.specs/DECISIONS.md` exists from a previously generated feature spec, adopt the patterns already decided there (storage, error handling, async boundaries) rather than establishing new ones — unless there is a strong reason to diverge, which must be documented in § 2.3.
+
 ### 1.3 Identify Design Decisions
 
 Based on the codebase exploration (or greenfield analysis), identify decisions that the PRD does NOT cover but that affect implementation:
@@ -74,6 +77,7 @@ Based on the codebase exploration (or greenfield analysis), identify decisions t
 - Async vs sync boundaries
 - Feature boundaries (what belongs in THIS feature vs adjacent features?)
 - Event-driven concerns (if applicable — see § 9 in template)
+- Cross-feature alignment (does DECISIONS.md already define patterns or interfaces this feature should reuse or extend?)
 
 ## Phase 2: Write the Feature Spec
 
@@ -86,6 +90,53 @@ Generate the spec following the template below. Write it to:
 If a `.specs/` directory doesn't exist, create it.
 
 If the user specifies a different path, use that instead.
+
+### Update Cross-Feature Decisions
+
+After writing the spec, update `.specs/DECISIONS.md` with decisions from this feature that affect other features. If the file doesn't exist, create it.
+
+**What to include** (only cross-feature concerns):
+- Shared patterns established or reused (storage, auth, error handling, async boundaries)
+- Models that other features may consume (with owner feature and key fields)
+- Interfaces exposed for consumption by other features (from § 7.2)
+- Cross-feature dependencies declared (from § 7.1)
+
+**What NOT to include**:
+- Internal implementation details (private methods, internal data structures)
+- Decisions that only affect this feature
+- Full method signatures (keep to one-line summaries)
+
+**Template** (create on first run, append on subsequent runs):
+
+```markdown
+# Cross-Feature Design Decisions
+
+> Auto-maintained by `/feature-spec`. Records design decisions that affect
+> multiple features. Read by subsequent `/feature-spec` runs for consistency
+> and by `/feature-review` for cross-feature validation.
+>
+> **Do not edit manually** unless correcting a decision after spec revision.
+
+## Shared Patterns
+
+| Pattern | Decision | Decided in | Notes |
+|---------|----------|------------|-------|
+
+## Shared Models
+
+| Model | Owner | Key fields | Consumed by |
+|-------|-------|-----------|-------------|
+
+## Exposed Interfaces
+
+| Feature | Interface | Signature (one-line) | Consumers |
+|---------|-----------|---------------------|-----------|
+
+## Cross-Feature Dependencies
+
+| Feature | Depends on | Via |
+|---------|-----------|-----|
+```
 
 ### Template
 
@@ -314,6 +365,7 @@ class ScopeAssignedPayload(BaseModel):
 7. **Section 9 is conditional** — Only include it for features that produce or consume async events. When included, define schemas (CloudEvents-compatible), channels, delivery guarantees, and consumer idempotency strategy.
 8. **Internal interfaces (Section 4) define TDD boundaries** — Each method signature is a test-first contract. The task generator will use these to pair "write test → implement → test passes" tasks.
 9. **Reference BRs/SRs by ID, never copy content** — In § 1, list the BR/SR IDs from PRD § 4. In design decisions and implementation notes, reference by ID (e.g., "Per BR1, all prices use integer cents"). Never copy the BR/SR text — the PRD is the single source of truth.
+10. **Update DECISIONS.md with cross-feature concerns** — After writing the spec, append to `.specs/DECISIONS.md` any shared patterns, models, or interfaces this feature establishes or consumes. Keep entries compact (one row per item). This file is the bridge between independent `/feature-spec` sessions.
 
 ## Phase 3: Present and Iterate
 
@@ -339,7 +391,8 @@ Be precise and analytical. The spec is a technical contract — every statement 
 
 ## Commit
 
-Commit the generated feature spec:
+Commit the generated feature spec and updated DECISIONS.md:
 - Type: `docs`
 - Scope: feature ID (e.g., `F6`)
 - Example: `docs(F6): generate feature spec for <feature-slug>`
+- Include `.specs/DECISIONS.md` in the same commit

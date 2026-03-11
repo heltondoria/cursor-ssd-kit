@@ -53,6 +53,8 @@ chmod +x ~/.cursor/hooks/*.sh
                                       │             (or /prd-import)
                               /feature-spec <─────┘
                                     │
+                          DECISIONS.md maintained ↕
+                                    │
                               /traceability (optional)
                                     │
                               /feature-review
@@ -70,6 +72,8 @@ chmod +x ~/.cursor/hooks/*.sh
                               /release
 ```
 
+> `/feature-spec` automatically maintains `.specs/DECISIONS.md` — a compact registry of cross-feature design decisions (shared patterns, models, and interfaces). Each spec session reads previous decisions for consistency and appends its own.
+
 ### Skills (15)
 
 | Skill | Purpose |
@@ -82,8 +86,8 @@ chmod +x ~/.cursor/hooks/*.sh
 | `/feature-spec` | Refine a single PRD feature into detailed implementation spec |
 | `/traceability` | Analyze BR/SR cross-references between PRD and feature specs |
 | `/feature-review` | Validate feature spec quality (9 criteria) |
-| `/feature-to-tasks` | Generate TDD-structured task list from a feature spec |
-| `/task-review` | Validate task list quality and spec coverage |
+| `/feature-to-tasks` | Generate TDD-structured task list (RED-GREEN pairs) from a feature spec |
+| `/task-review` | Validate task list quality, TDD structure, and spec coverage |
 | `/quality-gates` | Run all quality checks and report pass/fail |
 | `/impl-review` | Validate implementation against feature spec with scoring |
 | `/scaffold` | Create new project with full tooling setup |
